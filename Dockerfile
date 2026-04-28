@@ -1,8 +1,17 @@
 FROM node:20-alpine
+
 WORKDIR /app
+
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
+
 COPY . .
-EXPOSE 8080
+
+RUN npm run build
+
+ENV NODE_ENV=production
 ENV PORT=8080
-CMD ["node", "src/index.js"]
+
+EXPOSE 8080
+
+CMD ["npm", "start"]
